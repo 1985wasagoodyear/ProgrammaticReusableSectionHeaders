@@ -8,6 +8,8 @@ final class MyViewController: UIViewController {
         let t = UITableView(frame: view.frame, style: .plain)
         t.dataSource = self
         t.delegate = self
+        t.sectionHeaderHeight = UITableView.automaticDimension
+        t.estimatedSectionHeaderHeight = 88.0
         // register reusable headers, just like you would register reusable cells
         t.register(CustomSectionHeaderView.self,
                    forHeaderFooterViewReuseIdentifier: CustomSectionHeaderView.reuseIdentifier)

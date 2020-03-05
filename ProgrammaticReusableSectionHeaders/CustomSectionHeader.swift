@@ -12,10 +12,13 @@ extension UIView {
     func setupToFill(superView: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         superView.addSubview(self)
-        leadingAnchor.constraint(equalTo: superView.leadingAnchor).isActive = true
-        trailingAnchor.constraint(equalTo: superView.trailingAnchor).isActive = true
-        topAnchor.constraint(equalTo: superView.topAnchor).isActive = true
-        bottomAnchor.constraint(equalTo: superView.bottomAnchor).isActive = true
+        let const = [
+            leadingAnchor.constraint(equalTo: superView.leadingAnchor),
+            trailingAnchor.constraint(equalTo: superView.trailingAnchor),
+            topAnchor.constraint(equalTo: superView.topAnchor),
+            bottomAnchor.constraint(equalTo: superView.bottomAnchor),
+        ]
+        NSLayoutConstraint.activate(const)
     }
 }
 
@@ -49,6 +52,12 @@ final class CustomDoubleSectionHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         customTextLabel = UILabel()
         secondaryTextLabel = UILabel()
+        // setup individual UIView traits and properties
+        customTextLabel.numberOfLines = 0
+        secondaryTextLabel.numberOfLines = 0
+        customTextLabel.font = UIFont.boldSystemFont(ofSize: 15.0)
+        secondaryTextLabel.font = UIFont.italicSystemFont(ofSize: 15.0)
+        
         super.init(reuseIdentifier: reuseIdentifier)
         
         // build constraints
@@ -56,19 +65,18 @@ final class CustomDoubleSectionHeaderView: UITableViewHeaderFooterView {
         secondaryTextLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(customTextLabel)
         contentView.addSubview(secondaryTextLabel)
-        customTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        customTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        customTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        customTextLabel.bottomAnchor.constraint(equalTo: secondaryTextLabel.topAnchor).isActive = true
-        secondaryTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        secondaryTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        secondaryTextLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         
-        // setup individual UIView traits and properties
-        customTextLabel.numberOfLines = 0
-        secondaryTextLabel.numberOfLines = 0
-        customTextLabel.font = UIFont.boldSystemFont(ofSize: 15.0)
-        secondaryTextLabel.font = UIFont.italicSystemFont(ofSize: 15.0)
+        let const = [
+            customTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8.0),
+            customTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0),
+            customTextLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0),
+            secondaryTextLabel.topAnchor.constraint(equalTo: customTextLabel.bottomAnchor, constant: 8.0),
+            secondaryTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8.0),
+            secondaryTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0),
+            contentView.bottomAnchor.constraint(equalTo: secondaryTextLabel.bottomAnchor, constant: 8.0),
+        ]
+        NSLayoutConstraint.activate(const)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
